@@ -14,9 +14,13 @@ def before_auth(req, sess):
 bware = Beforeware(before_auth, skip=[r'/login', r'/signup', r'/logout', r'/static/.*', r'/favicon\.ico'])
 
 # Initialize FastHTML App with Beforeware and Session configuration
+import os
+session_secret = os.environ.get('FASTHTML_SESSKEY', 'fallback-session-key-654321')
+
 app, rt = fast_app(
     pico=False,
     before=bware,
+    secret_key=session_secret,
     hdrs=(
         # Tailwind CSS CDN
         Script(src="https://cdn.tailwindcss.com"),
