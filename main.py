@@ -7,6 +7,7 @@ import routes_auth
 import routes_jobs
 import routes_export
 
+
 # Protected Main View (Root / Dashboard)
 @rt('/', methods=['GET'])
 def dashboard_page(sess):

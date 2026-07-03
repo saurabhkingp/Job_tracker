@@ -8,10 +8,10 @@ def before_auth(req, sess):
     auth = req.scope['auth'] = sess.get('auth', None)
     path = req.scope['path']
     # Allow login, signup, logout, static files, and favicon to bypass authentication
-    if not auth and path not in ('/login', '/signup', '/logout') and not path.startswith('/static'):
+    if not auth and path not in ('/login', '/signup', '/logout') and not path.startswith('/static') and not path.startswith('/data'):
         return login_redir
 
-bware = Beforeware(before_auth, skip=[r'/login', r'/signup', r'/logout', r'/static/.*', r'/favicon\.ico'])
+bware = Beforeware(before_auth, skip=[r'/login', r'/signup', r'/logout', r'/static/.*', r'/data/.*', r'/favicon\.ico'])
 
 # Initialize FastHTML App with Beforeware and Session configuration
 import os
@@ -22,6 +22,8 @@ app, rt = fast_app(
     before=bware,
     secret_key=session_secret,
     hdrs=(
+        # Global Favicon
+        Link(rel="icon", type="image/png", href="/data/logo.png"),
         # Tailwind CSS CDN
         Script(src="https://cdn.tailwindcss.com"),
         # SortableJS CDN for Kanban drag-and-drop

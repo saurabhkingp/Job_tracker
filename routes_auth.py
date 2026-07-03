@@ -3,6 +3,8 @@ from app import rt
 from database import users, hash_password, User, seed_jobs_for_user
 from components import briefcase_svg, eye_on_svg, eye_off_svg
 
+
+
 # Login View GET
 @rt('/login', methods=['GET'])
 def login_page(error_msg: str = "", registered: str = ""):
